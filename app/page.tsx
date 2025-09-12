@@ -112,7 +112,7 @@ export default function Home() {
                       Ready to transform your conversations?
                   </h2>
                   <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                      Join thousands of users who&apos;ve already discovered a better way to communicate. Start your journey with Beam today - it's completely free.
+                      Join thousands of users who&apos;ve already discovered a better way to communicate. Start your journey with Beam today - it&apos;s completely free.
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
