@@ -74,7 +74,7 @@ export default function Home() {
                 Everything you need to stay connected
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Powerful features designed for seamless communication, whether you're chatting with friends or collaborating with teams.
+                Powerful features designed for seamless communication, whether you&apos;re chatting with friends or collaborating with teams.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
@@ -112,7 +112,7 @@ export default function Home() {
                       Ready to transform your conversations?
                   </h2>
                   <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                      Join thousands of users who've already discovered a better way to communicate. Start your journey with Beam today - it's completely free.
+                      Join thousands of users who&apos;ve already discovered a better way to communicate. Start your journey with Beam today - it's completely free.
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
