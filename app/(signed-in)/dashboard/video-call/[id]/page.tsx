@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react'; // Import useEffect
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     CallControls,
@@ -9,6 +9,8 @@ import {
     useCallStateHooks,
 } from '@stream-io/video-react-sdk';
 import { Check, Copy } from 'lucide-react';
+import "stream-chat-react/dist/css/v2/index.css"
+
 
 // Assumed imports
 import StatusCard from '@/components/StatusCard';
@@ -79,7 +81,7 @@ export default function VideoCall() {
         );
     }
 
-    // --- Return Statement for Joined State with Improvements ---
+    // --- Return Statement for Joined State ---
     if (callingState === CallingState.JOINED) {
         return (
             <div className="flex flex-col h-screen w-full">
@@ -123,6 +125,17 @@ export default function VideoCall() {
                                                     </>
                                                 )}
                                             </button>
+                                            {/* Bottom Controls */}
+                                          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+                                              <CallControls onLeave={handleLeave} />
+                                              {/* Cancel Call Button */}
+                                              <button
+                                                  onClick={handleLeave}
+                                                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                              >
+                                                  Cancel Call
+                                              </button>
+                                          </div>
                                         </div>
                                     </div>
                                 </div>
@@ -130,9 +143,7 @@ export default function VideoCall() {
                         </div>
                     )}
                 </div>
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
-                    <CallControls onLeave={handleLeave} />
-                </div>
+                
             </div>
         );
     }

@@ -12,6 +12,8 @@ import {
     StreamVideoClient,
 } from "@stream-io/video-react-sdk";
 import { AlertTriangle, Video } from "lucide-react";
+import "stream-chat-react/dist/css/v2/index.css"
+
 
 // --- UI Components (assumed to be in your project) ---
 import StatusCard from "@/components/StatusCard";
@@ -63,16 +65,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         return () => {
             newClient.disconnectUser().catch(console.error);
+            setClient(null);
         };
     }, [streamUser, tokenProvider]);
 
     useEffect(() => {
-        if (!client || !id) return;
+        if (!client || !id || typeof id !== 'string') return;
         
-        setError(null);
-        const streamCall = client.call("default", id as string);
+        const streamCall = client.call("default", id);
 
         const joinCall = async () => {
+            setError(null);
             try {
                 await streamCall.join({ create: true });
                 setCall(streamCall);
@@ -87,9 +90,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         joinCall();
 
         return () => {
-            if (streamCall && streamCall.state.callingState === CallingState.JOINED) {
-                streamCall.leave().catch(console.error);
-            }
+            // This cleanup is now robust and will correctly leave the call
+            streamCall.leave().catch(console.error);
+            setCall(null);
         };
     }, [id, client]);
 
