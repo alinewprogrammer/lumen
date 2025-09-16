@@ -120,3 +120,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* --- App overrides --- */
+/* Hide Stream Chat commands and poll related UI in the input to disable broken poll feature */
+.str-chat__message-composer button[aria-label*="Command" i],
+.str-chat__message-composer button[aria-label*="Commands" i],
+.str-chat__message-composer button[aria-label*="Poll" i],
+.str-chat__message-composer [data-testid*="commands" i],
+.str-chat__message-composer [data-testid*="poll" i],
+.str-chat__slash-command-button,
+.str-chat__polls-button {
+  display: none !important;
+}

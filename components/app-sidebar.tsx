@@ -1,6 +1,6 @@
 'use client'
 import * as React from "react"
-import { GalleryVerticalEnd } from "lucide-react"
+import { GalleryVerticalEnd, LogOutIcon } from "lucide-react"
 
 import {
   Sidebar,
@@ -16,15 +16,15 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
-import { UserButton, useUser } from "@clerk/nextjs"
+import { UserButton, useUser, useClerk } from "@clerk/nextjs"
 import { ChannelFilters, ChannelSort } from "stream-chat"
-import { Channel } from "diagnostics_channel"
 import { ChannelList } from "stream-chat-react"
 import {NewChatDialog } from "./ui/NewChatDialog"
 
 // This is sample data.
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
+  const { signOut } = useClerk();
 
   const filters: ChannelFilters = {
     members: { $in: [user?.id as string] },
@@ -53,6 +53,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <UserButton signInUrl="/sign-in" />
               </div>
             </SidebarMenuButton>
+          </SidebarMenuItem>
+          {/* Mobile-visible explicit Sign Out for reliability */}
+          <SidebarMenuItem>
+            <Button
+              variant="outline"
+              className="w-full md:hidden"
+              onClick={() => signOut({ redirectUrl: "/" })}
+            >
+              <LogOutIcon className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

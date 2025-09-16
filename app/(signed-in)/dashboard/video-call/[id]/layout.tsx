@@ -12,8 +12,7 @@ import {
     StreamVideoClient,
 } from "@stream-io/video-react-sdk";
 import { AlertTriangle, Video } from "lucide-react";
-import "stream-chat-react/dist/css/v2/index.css"
-
+import "@stream-io/video-react-sdk/dist/css/styles.css"
 
 // --- UI Components (assumed to be in your project) ---
 import StatusCard from "@/components/StatusCard";
@@ -30,6 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const [call, setCall] = useState<Call | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [client, setClient] = useState<StreamVideoClient | null>(null);
+    const isSecureContext = typeof window !== 'undefined' ? window.isSecureContext : true;
 
     const streamUser = useMemo(() => {
         if (!user) return null;
@@ -77,6 +77,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         const joinCall = async () => {
             setError(null);
             try {
+                // Proactively disable devices before joining to avoid getUserMedia prompts/failures,
+                // especially on mobile browsers or when accessing over HTTP.
+                try {
+                    await streamCall.camera.disable();
+                    await streamCall.microphone.disable();
+                } catch (e) {
+                    console.warn('Failed to disable devices before join (non-fatal):', e);
+                }
+
                 await streamCall.join({ create: true });
                 setCall(streamCall);
             } catch (error) {
@@ -127,6 +136,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 className="min-h-screen bg-blue-50"
             >
                 <InlineSpinner size="lg" />
+            </StatusCard>
+        );
+    }
+
+    // Surface a helpful hint for insecure contexts where camera/mic may be blocked by the browser.
+    if (!isSecureContext) {
+        return (
+            <StatusCard
+                title="Unsecured connection detected"
+                description="Your browser may block camera and microphone on non-HTTPS connections. Join will proceed with devices disabled. To use audio/video, access this site over HTTPS (e.g., via a tunnel like ngrok or a reverse proxy)."
+                className="min-h-screen bg-yellow-50"
+            >
+                <InlineSpinner size="md" />
             </StatusCard>
         );
     }

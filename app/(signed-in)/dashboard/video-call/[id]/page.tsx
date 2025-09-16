@@ -9,7 +9,7 @@ import {
     useCallStateHooks,
 } from '@stream-io/video-react-sdk';
 import { Check, Copy } from 'lucide-react';
-import "stream-chat-react/dist/css/v2/index.css"
+import "@stream-io/video-react-sdk/dist/css/styles.css"
 
 
 // Assumed imports

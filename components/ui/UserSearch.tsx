@@ -38,9 +38,10 @@ function UserSearch({
     };
 
     return (
-        <div className={cn("w-full max-w-2xl mx-auto", className)}>
+        <div className={cn("w-full", className)}>
             {/* Search Input */}
             <div className="relative">
+
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                     type="text"
@@ -61,7 +62,7 @@ function UserSearch({
 
                 {/* Search Results */}
                 {searchTerm.trim() && (
-                    <div className="mt-2 bg-card border border-border rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                    <div className="absolute left-0 right-0 top-full mt-2 bg-card border border-border rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
                         {isLoading ? (
                             <div className="p-4 text-center text-muted-foreground">
                                 <div className="flex items-center justify-center space-x-2">
